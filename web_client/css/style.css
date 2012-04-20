@@ -1,0 +1,248 @@
+@font-face { font-family: SegoeUI; src: url('segoeui.ttf'); }
+
+html{
+	height:100%;
+}
+
+body{
+	height:100%;
+	margin:0;
+	padding:0;
+	font-family:Arial, Helvetica, sans-serif;
+	background-image: linear-gradient(left , rgb(226,172,119) 0%, rgb(207,217,208) 78%);
+	background-image: -o-linear-gradient(left , rgb(226,172,119) 0%, rgb(207,217,208) 78%);
+	background-image: -moz-linear-gradient(left , rgb(226,172,119) 0%, rgb(207,217,208) 78%);
+	background-image: -webkit-linear-gradient(left , rgb(226,172,119) 0%, rgb(207,217,208) 78%);
+	background-image: -ms-linear-gradient(left , rgb(226,172,119) 0%, rgb(207,217,208) 78%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		right bottom,
+		color-stop(0, rgb(226,172,119)),
+		color-stop(0.78, rgb(207,217,208))
+	);
+}
+
+input,textarea{
+	outline: none;
+}
+
+.okno{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	padding:40px;
+	color:#666;
+	border:1px solid #AAA;
+	box-shadow:0 0 37px #888;
+	background-color:white;
+}
+
+.okno2{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	padding:40px;
+	box-shadow:0 0 37px #000;
+	background-color:white;
+}
+
+.okno3{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	color:#666;
+	border:1px solid #AAA;
+	box-shadow:0 0 37px #888;
+}
+
+#zatemnitev{
+	position:relative;
+	background-color:rgba(0,0,0,0.8);
+	width:100%;
+	height:100%;
+	z-index:100;
+	display:none;
+}
+
+input[type=button]{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	margin:0;
+	padding:10px 30px;
+	border:1px solid #B20;
+	background-color:#C30;
+	color:white;
+	cursor:pointer;
+}
+
+/************* Forma ***********************/
+
+.forma a{
+	color:#666;
+	text-decoration:none;
+}
+
+.forma a:hover{
+	color:#333;
+}
+
+.forma input{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	border:1px solid #CCC;
+}
+
+.forma input[type=text],input[type=password]{
+	width:300px;
+	padding:10px;
+	margin:0 0 5px 20px;
+	color:#333;
+}
+
+.forma input[type=button]{
+	margin-top:15px;
+}
+
+/************* Registracija ****************/
+
+#registracija{
+	position:absolute;
+	margin:-300px 0 0 -250px;
+	left:50%;
+	top:50%;
+	text-align:right;
+}
+
+#registracija img{
+	margin:0 50px 20px 0;
+}
+
+/************** Prijava ********************/
+
+#prijava{
+	position:absolute;
+	margin:-200px 0 0 -250px;
+	left:50%;
+	top:50%;
+	text-align:right;
+}
+
+#prijava img{
+	margin:0 50px 20px 0;
+}
+
+/********************* Top **************************/
+
+#nastavitve{
+	position:absolute;
+	top:0;
+	right:0;
+	margin:10px 20px 0 0;
+	font-family:"SegoeUI";
+	font-size:16pt;
+	color:#777;
+}
+
+/********************* Friends **********************/
+
+#friends{
+	float:left;
+	width:299px;
+	height:700px;
+	background-color:rgba(255,255,255,0.6);
+	border-right:1px solid #D7D8CA;
+}
+
+#friends-header{
+	height:80px;
+	padding:40px;
+}
+
+#friends-header img{
+	float:left;
+	width:100px;
+	height:100px;
+}
+
+#friends-header div{
+	float:left;
+	margin-left:20px;
+}
+
+#friend-list{
+	font-family:"SegoeUI";
+}
+
+#friend-list div{
+	text-align:center;
+}
+
+#friend-list div h1{
+	font-size:26pt;
+}
+
+#friend-list ul{
+	list-style:none;
+	padding:0;
+	margin:0 0 0 20px;
+}
+
+#friend-list ul li{
+	padding:10px 20px;
+	cursor:pointer;
+}
+
+.selected-friend{
+	margin-right:-2px;
+	background-color:white;
+	border:1px solid #D7D8CA;
+	border-right:none;
+}
+
+/********************* Chat *************************/
+
+#top{
+	height:70px;
+	background-color:#CC6600;
+}
+
+#chat{
+	float:left;
+	height:700px;
+	width:800px;
+	background-color:white;
+}
+
+#chat-box{
+	height:550px;
+}
+
+#chat-input{
+	height:150px;
+	padding:0 40px 40px 40px;
+}
+
+#chat-input textarea{
+	min-width:580px;
+	min-height:90px;
+	max-width:580px;
+	max-height:90px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:17px;
+	border:1px solid #CCC;
+	padding:10px;
+	color:#333;
+}
+
+#chat-input input[type=button]
+{
+	float:right;
+	margin-top:3px;
+}
+
+#content{
+	padding:0;
+	margin:100px auto 0 auto;
+	width:1100px;
+	height:700px;
+}
+	
