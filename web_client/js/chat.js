@@ -25,5 +25,10 @@ $(document).ready(function(){
 });
 
 $("#chat-input input[type=button]").click(function(){
-	
+	now.posljiSporocilo($("#chat-input").html());
 });
+
+now.prejmiSporocilo(var s)
+{
+	$("#chat-box").html($("#chat-box").html()+s);
+}
