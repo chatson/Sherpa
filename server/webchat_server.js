@@ -37,3 +37,7 @@ everyone.now.vrniPrijatelje = function(idu) {
 		});	
 	});
 }
+
+everyone.now.posljiSporocilo = function(s, id) {
+	nowjs.getClient(id).prejmiSporocilo(s);
+}
