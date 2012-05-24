@@ -1,90 +1,39 @@
- //------------------------------------smile replace---------------------------------------------------------------------------------
-function replaceSmile(text) {
-  var emoticons = {
-        ':)' : 'smile.gif',
-        ':-)'  : 'smile.gif',
-        ':=)'  : 'smile.gif',
-        ':(' : 'sadsmile.gif',
-        ':-('  : 'sadsmile.gif',
-        ':=('  : 'sadsmile.gif',
-        ':D' : 'bigsmile.gif',
-        ':=D' : 'bigsmile.gif',
-        ':-D' : 'bigsmile.gif',
-        ':d' : 'bigsmile.gif',
-        ':=d' : 'bigsmile.gif',
-        ':-d' : 'bigsmile.gif',
-        '8)' : 'cool.gif',
-        '8=)' : 'cool.gif',
-        '8-)' : 'cool.gif',
-        'B)' : 'cool.gif',
-        'B=)' : 'cool.gif',
-        'B-)(cool)' : 'cool.gif',
-        ';)' : 'wink',
-        ';(' : 'crying.gif',
-        ';-(' : 'crying.gif',
-        ';=(' : 'crying.gif',
-
-        '(sweat)' : 'sweating.gif',
-        '(:|' : 'sweating.gif',
-        ':|' : 'speechless.gif',
-        ':=|' : 'speechless.gif',
-        ':-|' : 'speechless.gif',
-        ':*' : 'kiss.gif',
-        ':=*' : 'kiss.gif',
-        ':-*' : 'kiss.gif',
-        ':P' : 'tongueout.gif',
-        ':=P' : 'tongueout.gif',
-        ':-P' : 'tongueout.gif',
-        ':p' : 'tongueout.gif',
-        ':=p' : 'tongueout.gif',
-        ':-p' : 'tongueout.gif',
-        '(blush)' : 'blush.gif',
-        ':$' : 'blush.gif',
-        ':-$' : 'blush.gif',
-        ':=$' : 'blush.gif',
-        ':">' : 'blush.gif',
-        ':^)' : 'wondering.gif',
-        '|-)' : 'sleepy.gif',
-        'I-)' : 'sleepy.gif',
-        'I=)' : 'sleepy.gif',
-        '(snooze)' : 'sleepy.gif',
-        '|(' : 'dull.gif',
-        '|-(' : 'dull.gif',
-        '|=(' : 'dull.gif',
-        '(inlove)'  : 'inlove.gif'
-
-}, url = "images/smiles/", patterns = [],
-     metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-
-  // build a regex pattern for each defined property
-  for (var i in emoticons) {
-    if (emoticons.hasOwnProperty(i)){ // escape metacharacters
-      patterns.push('('+i.replace(metachars, "\\$&")+')');
-    }
-  }
-
-  // build the regular expression and replace
-  return text.replace(new RegExp(patterns.join('|'),'g'), function (match) {
-    return typeof emoticons[match] != 'undefined' ? '<img src="'+url+emoticons[match]+'"/>' :match;
-  });
-}
-
-
-
-
 $(document).ready(function(){
+	
+	/******************* Scroll stvari *******************/
+				
+	var pane = $('.scroll-pane');
+	pane.jScrollPane();
+	var api = pane.data('jsp');
+
+	/*****************************************************/
+	
 	$("#nastavitve").html(uporabnik);
 	
-	now.napolniSeznamPrijateljev = function(prijatelji)
+	$("#obvestila-button").click(function(){
+		now.preveriZahteveZaPrijateljstvo();
+	});
+	
+	razsiri();
+	
+	now.init();
+	
+	now.opozorilo = function(msg)
 	{
+		alert(msg);
+	}
+	
+	now.napolniSeznamPrijateljev = function(prijatelji)
+	{	
 		for(var i=0; i<prijatelji.length;i++)
 		{
-			$("#friend-list ul").append("<li>" + prijatelji[i].uporabnik + "</li>");
+			$("#friend-list ul").append("<li id=\"prijatelj_" + prijatelji[i]._id + "\">" + prijatelji[i].uporabnik + "</li>");
 			
 			if(i==0)
 			{
 				$("#friends-header div b").html(prijatelji[i].uporabnik);
 				$("#friend-list ul li").addClass("selected-friend");
+				vrniStarejsaSporocila();
 			}
 		}
 		
@@ -92,27 +41,118 @@ $(document).ready(function(){
 			$("#friend-list ul li").removeClass("selected-friend");
 			$(this).addClass("selected-friend");
 			$("#friends-header div b").html($(this).html());
+			vrniStarejsaSporocila();
 		});
 	}
 	
-	now.vrniPrijatelje(idu);
+	function dodajSporociloNaChatBox(ime, msg, cas)
+	{
+		var sp_ime = "<div class='sp_ime'>" + ime + "</div>";
+		var sp_cas = "<div class='sp_cas'>" + cas + "</div>";
+		var sp_msg = "<div class='sp_msg'>" + msg + "</div>";
+		var sp_clear = "<div class='clear'></div>";
+		
+		var sporocilo = $("<div></div>").attr({class: "sporocilo"});//.attr({id: "msg_" + msgid});
+		
+		sporocilo.append(sp_ime + sp_msg + sp_cas + sp_clear);
+		
+				
+		api.getContentPane().append(sporocilo);
+		api.reinitialise();
+		api.scrollToY(api.getContentPane().height());
+	}
+	
+	function vrniStarejsaSporocila()
+	{
+		now.vrniStarejsaSporocila($(".selected-friend").attr("id").split("_")[1]);
+	}
+	
+	now.sprejmiStarejsaSporocila = function(sporocila, uporabnik)
+	{
+		api.getContentPane().html("");
+
+		for(var s in sporocila)
+		{
+			var ime = "";
+			
+			if(sporocila[s].id1 == uporabnik[0]._id)
+				dodajSporociloNaChatBox(uporabnik[0].uporabnik, sporocila[s].sporocilo, sporocila[s].time);
+			else
+				dodajSporociloNaChatBox(uporabnik[1].uporabnik, sporocila[s].sporocilo, sporocila[s].time);
+		}
+		
+		$("#jspPane").width(700);
+	}
+	
+	now.dodajZahteveNaSeznam = function(zahteve)
+	{
+		if(zahteve.length == 0)
+			return;
+		
+		var bg = $("<div></div>").attr({id: "zatemnitev"});
+		bg.load("zahtevePrijateljev.php");
+		$("body").append( bg );
+
+		bg.fadeIn("fast", function(){
+			for(var i in zahteve)
+			{				
+				$("#zahtevePrijateljev").append("<div><span>" + zahteve[i].uporabnik + "</span><input type='button' value='Potrdi' id='potrdi_" + zahteve[i]._id + "' /><div class='clear'></div></div>");
+				$("#potrdi_" + zahteve[i]._id).click(function(){
+					
+					var a = $(this).attr("id");
+					
+					now.potrdiPrijateljstvo(a.split("_")[1]);
+				});
+			}
+		});
+		
+		bg.click(function(e){
+			if(e.target.id === "zatemnitev")
+				bg.fadeOut("fast");
+		});
+	}
+	
+	now.vrniPrijatelje();
+	now.sprejmiSporocilo = function(ime, msg, cas)
+	{
+		if(uporabnik == ime || $(".selected-friend").html() == ime)
+			dodajSporociloNaChatBox(ime, msg, cas);
+	}
+});
+
+$("#dodaj-okno-button").click(function(){
+		var bg = $("<div></div>").attr({id: "zatemnitev"});
+		bg.load("dodajPrijatelja.php");
+		$("body").append( bg );
+		
+		bg.fadeIn("fast", function(){
+			$("#dodaj-button").click(function(){
+				now.dodajPrijatelja($("#dodajPrijatelja #email").val());
+				bg.fadeOut("fast");
+			});
+		});
+		
+		bg.click(function(e){
+			if(e.target.id === "zatemnitev")
+				bg.fadeOut("fast");
+		});
 });
 
 $("#chat-input input[type=button]").click(function(){
-        var txt = $("#chat-input").html();
-        options = {
-                callback: function( text, href ) {
-                                  href && debug.log([ text, href ]);
-                                   return href ? '<a class="chatlink" href="' + href + '" title="' + href + '" target="_blank" >' + text + '</a>' : text;
-                }
-        };
-        txt = linkify( txt, options );
-        txt = replaceSmile(txt);
-
-	now.posljiSporocilo(txt);
+		now.posljiSporocilo(uporabnik,$(".selected-friend").attr("id").split("_")[1],$("#chat-input textarea").val());
+		$("#chat-input textarea").val("");
 });
 
-now.prejmiSporocilo(var s)
+$(window).resize(function(e){
+	razsiri();
+});
+
+function razsiri()
 {
-	$("#chat-box").html($("#chat-box").html()+s);
+	var visina = $(this).height();
+	
+	$("#content").height(visina-200);
+	$("#chat").height(visina-200);
+	$("#chat-box").height(visina-440);
+	$("#friends").height(visina-200);
 }

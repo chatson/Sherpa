@@ -1,5 +1,6 @@
-var uporabnik;
-var idu;
+var uporabnik = "";
+now.idu;
+now.email = "";
 
 $("#prijavi").click(function(){
 	uporabnik = $('#uporabnik').val();
@@ -7,7 +8,8 @@ $("#prijavi").click(function(){
 	$.post("prijavi.php", { uporabnik: uporabnik, geslo: geslo },
 		   function(data) {
 		     if(data.stanje == true){
-				 	idu = data.id;
+				 	now.idu = data.id.$id;
+					now.email = data.email;
 				 	$("#prijava").fadeOut("slow",function(){
 						$("body").load("chat.php");
 					});
@@ -16,7 +18,6 @@ $("#prijavi").click(function(){
 });
 
 $("#prijava a").click(function(){
-	
 	var bg = $("<div></div>").attr({id: "zatemnitev"});
 		bg.load("registracija.php");
 		$("body").append( bg );
