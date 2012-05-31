@@ -121,6 +121,27 @@ input[type=button]{
 	margin:0 50px 20px 0;
 }
 
+#registracija div img{
+	margin:0 0 0 20px;
+}
+
+#brskaj-sliko-button{
+	position:relative;
+	width:100px;
+	height:100px;
+	background-image:url('../slike/avatar.png');
+}
+
+#brskaj-sliko-button input[type='file']{
+	position:absolute;
+	top:0;
+	left:0;
+	width:100px;
+	height:100px;
+	opacity:0;
+	z-index:2;
+}
+
 /************** Prijava ********************/
 
 #prijava{
@@ -159,6 +180,7 @@ input[type=button]{
 #friends-header div{
 	float:left;
 	margin-left:20px;
+	width:90px;
 }
 
 #friend-list{
@@ -182,6 +204,7 @@ input[type=button]{
 #friend-list ul li{
 	padding:10px 20px;
 	cursor:pointer;
+	position:relative;
 }
 
 .selected-friend{
@@ -205,6 +228,64 @@ input[type=button]{
 #zahtevePrijateljev input[type=button]{
 	margin-top:0px;
 	float:right;
+}
+
+#friend-list ul li .ctxmenu{
+	background-color:white;
+	position:absolute;
+	top:0;
+	z-index:10;
+	box-shadow:0 0 10px #666;
+}
+
+#friend-list ul li .ctxmenu ul{
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+#friend-list ul li .ctxmenu ul li{
+	margin:0;
+	padding:10px 20px;
+	cursor:pointer;
+	text-align:left;
+}
+
+#friend-list ul li .ctxmenu ul li:hover{
+	background-color:#FEEFD8;
+}
+
+#posljiDatoteko{
+	position:absolute;
+	margin:-300px 0 0 -200px;
+	left:50%;
+	top:50%;
+}
+
+#posljiDatoteko img{
+	margin:0 50px 20px 0;
+}
+
+#brskaj-datoteke-button{
+	margin:0 auto 0 auto;
+	position:relative;
+	line-height:67px;
+	text-align:center;
+	width:200px;
+	height:70px;
+	background-color:#C30;
+	color:white;
+	box-shadow:0 0 10px #C30;
+}
+
+#brskaj-datoteke-button input[type='file']{
+	position:absolute;
+	top:0;
+	left:0;
+	width:200px;
+	height:70px;
+	opacity:0;
+	z-index:2;
 }
 
 /********************* Chat *************************/

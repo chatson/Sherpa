@@ -1,5 +1,6 @@
 <div id="registracija" class="okno2 forma">
     <img src="slike/registracija.png" />
+    <div>Izberi sliko:<div id="brskaj-sliko-button"><input type="file" /></div></div>
     <div>Vzdevek:<input id="uporabnik" type="text" /></div>
     <div>Geslo:<input id="geslo" type="password" /></div>
     <div>Ime:<input id="ime" type="text" /></div>

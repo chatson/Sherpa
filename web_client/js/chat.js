@@ -25,9 +25,11 @@ $(document).ready(function(){
 	
 	now.napolniSeznamPrijateljev = function(prijatelji)
 	{	
+		$("#friend-list ul").html("");
+	
 		for(var i=0; i<prijatelji.length;i++)
 		{
-			$("#friend-list ul").append("<li id=\"prijatelj_" + prijatelji[i]._id + "\">" + prijatelji[i].uporabnik + "</li>");
+			$("#friend-list ul").append("<li id=\"prijatelj_" + prijatelji[i]._id + "\"><span>" + prijatelji[i].uporabnik + "</span></li>");
 			
 			if(i==0)
 			{
@@ -37,11 +39,65 @@ $(document).ready(function(){
 			}
 		}
 		
-		$("#friend-list ul li").click(function(){
+		$("#friend-list ul li").click(function(e){
 			$("#friend-list ul li").removeClass("selected-friend");
 			$(this).addClass("selected-friend");
-			$("#friends-header div b").html($(this).html());
+			$("#friends-header div b").html($(".selected-friend span").html());
 			vrniStarejsaSporocila();
+		});
+		
+		$("#friend-list ul li").bind("contextmenu", function(e){
+			var ctxmenu = $("<div></div>").attr({class: "ctxmenu"});
+			ctxmenu.append("<ul><li id=\"profil-button\">Ogled profila</li><li id=\"datoteka-button\">Pošlji datoteko</li></ul>");
+			$(this).append( ctxmenu );
+			
+			$(".ctxmenu ul").hover(function(){}, function(){
+				$(this).remove();
+			});
+			
+			$("#datoteka-button").click(function(){
+				var bg = $("<div></div>").attr({id: "zatemnitev"});
+				bg.load("posljiDatoteko.php");
+				$("body").append( bg );
+				
+				bg.fadeIn("fast", function(){
+					$('#brskaj-datoteke-button input[type=file]').change(function(e){
+						var datoteka = e.currentTarget.files[0];
+						
+						var velikostDatoteke = 0;
+						
+						if (datoteka.size > 1024 * 1024)
+						  velikostDatoteke = (Math.round(datoteka.size * 100 / (1024 * 1024)) / 100).toString() + ' MB';
+						else
+						  velikostDatoteke = (Math.round(datoteka.size * 100 / 1024) / 100).toString() + 'kb';
+						  
+						var xhr = new XMLHttpRequest();
+			
+						xhr.open("POST", "poslji.php");
+						var data = new FormData();
+						data.append('file', datoteka);
+						//xhr.upload.addEventListener("progress", updateProgress, false);
+						xhr.addEventListener("load", uploadComplete, false);
+						xhr.send(data);
+						
+						function uploadComplete(evt) {
+							var url = "<a href=\"/praktikum/datoteke/" + datoteka.name + "\" target=\"_blank\">" + datoteka.name + "</a>";
+							now.posljiSporocilo(uporabnik,$(".selected-friend").attr("id").split("_")[1],url);
+							
+							bg.remove();
+						}
+					});
+				});
+				
+				bg.click(function(e){
+					if(e.target.id === "zatemnitev")
+						bg.fadeOut("fast", function(){
+							bg.remove();
+						});
+				});
+			});
+			
+			return false;
 		});
 	}
 	
@@ -81,6 +137,9 @@ $(document).ready(function(){
 				dodajSporociloNaChatBox(uporabnik[1].uporabnik, sporocila[s].sporocilo, sporocila[s].time);
 		}
 		
+		$("#friends-header div i").html(uporabnik[1].komentar);
+		$("#friends-header img").attr("src",uporabnik[1].slika);
+		
 		$("#jspPane").width(700);
 	}
 	
@@ -102,13 +161,20 @@ $(document).ready(function(){
 					var a = $(this).attr("id");
 					
 					now.potrdiPrijateljstvo(a.split("_")[1]);
+					
+					$(this).parent().remove();
 				});
 			}
 		});
 		
 		bg.click(function(e){
 			if(e.target.id === "zatemnitev")
-				bg.fadeOut("fast");
+			{
+				now.vrniPrijatelje();
+				bg.fadeOut("fast", function(){
+					bg.remove();
+				});
+			}
 		});
 	}
 	

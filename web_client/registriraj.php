@@ -7,6 +7,7 @@
 	$naslov = $_POST['naslov'];
 	$starost = $_POST['starost'];
 	$email = $_POST['email'];
+	$slika = $_POST['urlSlike'];
 
 	$m = new Mongo();
 
@@ -20,7 +21,9 @@
 				  "priimek" => $priimek,
 				  "naslov" => $naslov,
 				  "starost" => $starost,
-				  "email" => $email );
+				  "email" => $email,
+				  "slika" => $slika,
+				  "komentar" => "Komentar..." );
 	
 	$collection->insert($obj);
 

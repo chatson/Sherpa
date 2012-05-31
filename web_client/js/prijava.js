@@ -22,6 +22,8 @@ $("#prijava a").click(function(){
 		bg.load("registracija.php");
 		$("body").append( bg );
 		
+		var urlSlike = "";
+		
 		bg.fadeIn("fast", function(){
 			$("#registriraj").click(function(){
 				
@@ -30,7 +32,7 @@ $("#prijava a").click(function(){
 				$("#registracija input").each(function(index) {
 					if($(this).val() == "Potrdi")
 					{
-						$.post("registriraj.php", { uporabnik: data[0], geslo: data[1], ime: data[2], priimek: data[3], naslov: data[4], starost: data[5], email: data[6]});
+						$.post("registriraj.php", { uporabnik: data[1], geslo: data[2], ime: data[3], priimek: data[4], naslov: data[5], starost: data[6], email: data[7], urlSlike: urlSlike});
 						bg.fadeOut("fast");
 						return false;
 					}
@@ -44,10 +46,47 @@ $("#prijava a").click(function(){
 					data[index] = $(this).val();
 				});			
 			});
+			
+					$('#brskaj-sliko-button input[type=file]').change(function(e){
+						var datoteka = e.currentTarget.files[0];
+						
+						var velikostDatoteke = 0;
+						
+						if (datoteka.size > 1024 * 1024)
+						  velikostDatoteke = (Math.round(datoteka.size * 100 / (1024 * 1024)) / 100).toString() + ' MB';
+						else
+						  velikostDatoteke = (Math.round(datoteka.size * 100 / 1024) / 100).toString() + 'kb';
+						  
+						var xhr = new XMLHttpRequest();
+			
+						xhr.open("POST", "posljiSliko.php");
+						var data = new FormData();
+						data.append('file', datoteka);
+	
+						xhr.addEventListener("load", uploadComplete, false);
+						xhr.send(data);
+						
+						function uploadComplete(evt) {
+							urlSlike = "/praktikum/slike/avatar/" + datoteka.name;
+							$("#brskaj-sliko-button").css("background-image","url(" + urlSlike + ")");
+						}
+					});
+				
+					bg.click(function(e){
+						if(e.target.id === "zatemnitev")
+							bg.fadeOut("fast", function(){
+								bg.remove();
+							});
+					});
+
 		});
 		
 		bg.click(function(e){
 			if(e.target.id === "zatemnitev")
-				bg.fadeOut("fast");
+			{
+				bg.fadeOut("fast", function(){
+					bg.remove();
+				});
+			}
 		});
 });
