@@ -246,3 +246,113 @@ input[type=button]{
 	height:700px;
 }
 	
+
+
+.soba{
+	padding:10px;
+}
+
+.soba:hover{
+	cursor:pointer;
+	background-color:#EEE;
+}
+
+#listUsers{
+	height:713px;
+        width: 130px;
+	padding:10px;
+	overflow:auto;
+	border:1px solid #CCC;
+}
+
+#tema{
+	position:absolute;
+	top:0;
+	left:0;
+	background:rgba(0,0,0,0.7);
+}
+
+#dialog{
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:-100px 0 0 -200px;
+	padding:40px;
+	background-color:white;
+	border-radius:10px;
+}
+
+.window input, #dialog input{
+	margin-top:5px;
+	border:1px solid #DDD;
+	padding:6px;
+	font-size:24px;
+	color:#333;
+}
+
+.window button, #dialog button{
+	float:right;
+	margin-top:5px;
+	padding:11px 15px;
+	cursor:pointer;
+	color:white;
+	background-image: linear-gradient(bottom, rgb(38,38,38) 11%, rgb(66,66,66) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(38,38,38) 11%, rgb(66,66,66) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(38,38,38) 11%, rgb(66,66,66) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(38,38,38) 11%, rgb(66,66,66) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(38,38,38) 11%, rgb(66,66,66) 100%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.11, rgb(38,38,38)),
+		color-stop(1, rgb(66,66,66))
+	);
+	border:1px solid #111;
+	border-radius:3px;
+}
+
+.window button:hover, #dialog button:hover{
+	background-image: linear-gradient(bottom, rgb(50,50,50) 11%, rgb(66,66,66) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(50,50,50) 11%, rgb(66,66,66) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(50,50,50) 11%, rgb(66,66,66) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(50,50,50) 11%, rgb(66,66,66) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(50,50,50) 11%, rgb(66,66,66) 100%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.11, rgb(50,50,50)),
+		color-stop(1, rgb(66,66,66))
+	);
+}
+
+.window button:active, #dialog button:active{
+	background-image: linear-gradient(bottom, rgb(66,66,66) 11%, rgb(50,50,50) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(66,66,66) 11%, rgb(50,50,50) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(66,66,66) 11%, rgb(50,50,50) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(66,66,66) 11%, rgb(50,50,50) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(66,66,66) 11%, rgb(50,50,50) 100%);
+	
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.11, rgb(66,66,66)),
+		color-stop(1, rgb(50,50,50))
+	);
+}
+a.chatlink:link {
+  color:#5aabff;
+  text-decoration: none;
+}
+a.chatlink:visited {
+  color:#5aabff;
+  text-decoration: none;
+}
+a.chatlink:hover, a:focus {
+  color:#5aabff;
+  text-decoration: none;
+}
